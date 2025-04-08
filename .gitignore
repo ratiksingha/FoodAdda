@@ -7,5 +7,6 @@
 /.env.production.local
 /.cache
 /.parcel-cache
+/data.json
 ```
 .parcel-cache/data.mdb

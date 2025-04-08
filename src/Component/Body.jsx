@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useReducer } from "react";
 import "./css/Body.css";
 import RestaurantCard from "./Res-Card";
 import Shimmer from "./Shimmer";
@@ -9,16 +9,31 @@ import { useState } from "react";
 import { API_URL } from "./constant";
 
 
-
+const reducer=(state,action)=>{
+    if(action.type==='increment'){
+        return {
+            ...state,cardCount:Math.min(state.cardCount+1,state.dataLength),
+           }
+        }
+    else if(action.type==='decrement'){
+        return{
+            ...state,cardCount:Math.max(state.cardCount-1,0)
+        }
+    }
+    else if(action.type==='setDataLength'){
+        return{
+            ...state,
+            dataLength:action.payload
+        }
+    }
+    else{
+        return state;
+        }
+}
 
 
 const Body = () => {
-
-    
-
-    const[cardCount,setCardCount]=useState(6);
     const[filteredData,setFilteredData]=useState([]);
-    const[dataLength,setDataLength]=useState(0);
     const[searchText,setSearchText]=useState("");
     
     
@@ -26,24 +41,36 @@ const Body = () => {
     const fetchData = async () => {
         const dataNew = await fetch( API_URL);
         const jsonData = await dataNew.json();
-        
-       setDataLength(jsonData.data.cards[4].card.card.gridElements.infoWithStyle.restaurants.length);
-       setFilteredData(jsonData.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
+        const length=jsonData.data.cards[4].card.card.gridElements.infoWithStyle.restaurants.length;
+       dispatch({
+        type:`setDataLength`,
+        payload:length
+       })
+        setFilteredData(jsonData.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
     };
 
     useEffect(() => {
         fetchData();
     }, []);
 
+    
+    const initialState={
+        cardCount:6,
+        dataLength:0
+    }
+    const [state,dispatch]=useReducer(reducer,initialState);
+
     const handleAdd = () =>{
-        console.log(dataLength);
-        
-        setCardCount((prevCount)=>Math.min(prevCount+1,dataLength));   
+      dispatch({
+        type:"increment",
+      }) 
     }
     
 
     const handleSub = () =>{
-        setCardCount((prevCount)=>Math.max(prevCount-1,0));
+       dispatch({
+        type:`decrement`,
+       })
     }
 
     const filterTopRated = async () =>{
@@ -87,7 +114,7 @@ const Body = () => {
                 </div>
             
             <div className="restaurant-container">
-                {filteredData.slice(0,cardCount).map((resutrant)=>(<RestaurantCard  key={resutrant.info.id} props={resutrant}/>))}
+                {filteredData.slice(0,state.cardCount).map((resutrant)=>(<RestaurantCard  key={resutrant.info.id} props={resutrant}/>))}
                 
                 
 
