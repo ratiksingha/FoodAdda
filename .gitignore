@@ -10,3 +10,4 @@
 /data.json
 ```
 .parcel-cache/data.mdb
+/.parcel-cache/lock.mdb
