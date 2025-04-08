@@ -12,7 +12,7 @@ const Footer = () => {
         <footer className="App-footer">
             <GreetContext.Provider value={devloperName}>
             
-                <Demo />
+                
             </GreetContext.Provider>
             
         </footer>

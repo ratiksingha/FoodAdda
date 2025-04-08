@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './src/App';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+import Header from './src/Component/Header';
+import Footer from './src/Component/Footer';
+import { createBrowserRouter,RouterProvider,Outlet } from 'react-router-dom';
+import Body from './src/Component/Body';
 import About from './src/Component/About';
+import Contact from './src/Component/Contact';
 
 
 // Header
@@ -27,17 +31,42 @@ import About from './src/Component/About';
 // - Contact 
 
 
-
+const App=()=>
+   (
+    <div className='App'>
+      <div className='App-header'>
+        <Header/>
+        </div>
+        <div className='App-body'>
+        <Outlet/>
+        </div>
+      <div className='App-footer'>
+        <Footer/>
+      </div>
+    </div>
+    );
 
     const router = createBrowserRouter([
       {
         path: '/',
-        element: <App />
-      },
-      {
-        path: '/about',
-        element: <About />
+        element: <App />,
+        children: [
+          {
+            path: '/',
+            element:<Body/>
+          },
+          {
+            path: '/about',
+            element: <About />
+          },
+          {
+            path: '/contact',
+            element: <Contact />
+            
+          }
+        ]
       }
+      
     ]);
    
 
@@ -45,6 +74,6 @@ import About from './src/Component/About';
 const root=ReactDOM.createRoot(document.getElementById("root"));
 root.render(
    <React.StrictMode>
-    < RouterProvider router={router} />
+    <RouterProvider router={router}/>
    </React.StrictMode>
  );
