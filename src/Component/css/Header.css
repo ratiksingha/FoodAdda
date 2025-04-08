@@ -1,0 +1,52 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+
+
+    
+
+}
+.nav-items{
+    font-size: 20px;
+}
+.logo-container{
+    display: flex;
+    align-items: center;
+    
+    
+    
+    
+}
+.logo{
+    width: 80px;
+    box-sizing: border-box;
+
+    padding-top: 2px;
+    padding-left: 5px;
+    padding-bottom: 2px;
+    transform: 0.3s;
+    background-image: none;
+    
+    
+
+    
+    
+}
+
+.nav-items >ul{
+    display: flex;
+   
+    list-style: none;
+    
+   
+   
+    
+
+}
+.nav-items >ul >li{
+    padding: 5px 20px;
+   
+   
+}
