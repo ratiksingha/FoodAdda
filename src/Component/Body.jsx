@@ -1,4 +1,4 @@
-import React, { useEffect , useReducer} from "react";
+import React, { useEffect } from "react";
 import "./css/Body.css";
 import RestaurantCard from "./Res-Card";
 import Shimmer from "./Shimmer";
@@ -14,29 +14,14 @@ import { API_URL } from "./constant";
 
 const Body = () => {
 
- 
-
-
+    
 
     const[cardCount,setCardCount]=useState(6);
     const[filteredData,setFilteredData]=useState([]);
     const[dataLength,setDataLength]=useState(0);
     const[searchText,setSearchText]=useState("");
     
-    const reducer=(state,action)=>{
-        if(action.type==='increment'){
-         return {fetchData:state.count+1}
-        }
-        else if(action.type==='decrement'){
-         return {count:state.count-1}
- 
-         }
-          else{
-             return state
-          }
-     }
-     const initialState={cardCount:cardCount,dataLength:0}
-      const [state,dispatch]=useReducer(reducer,{initialState})
+    
 
     const fetchData = async () => {
         const dataNew = await fetch( API_URL);
@@ -51,10 +36,9 @@ const Body = () => {
     }, []);
 
     const handleAdd = () =>{
-        dispatch({type:"increment"})
+        console.log(dataLength);
         
-        
-          
+        setCardCount((prevCount)=>Math.min(prevCount+1,dataLength));   
     }
     
 
