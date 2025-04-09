@@ -71,3 +71,14 @@
     width: 160%;
   }
   
+  .restaurant-link {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit text color from parent */
+}
+
+.restaurant-link:visited,
+.restaurant-link:active,
+.restaurant-link:hover {
+    color: inherit; /* Prevent blue or purple link colors */
+    text-decoration: none; /* Ensure no underline appears */
+}

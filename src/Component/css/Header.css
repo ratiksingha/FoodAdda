@@ -9,7 +9,7 @@
 
 }
 .nav-items{
-    font-size: 20px;
+    font-size: 21px;
 }
 .logo-container{
     display: flex;
@@ -37,8 +37,21 @@
 
 .nav-items >ul{
     display: flex;
+   list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
    
-    list-style: none;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none;
+    text-align: center;
     
    
    
@@ -46,7 +59,10 @@
 
 }
 .nav-items >ul >li{
-    padding: 5px 20px;
-   
-   
+    padding: 10px 20px;
+    margin: 0 10px;
+    display: inline-block;
+}
+.nav-items .MuiListItemText-root {
+    white-space: nowrap; /* Prevent text wrapping */
 }

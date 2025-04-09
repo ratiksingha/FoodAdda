@@ -1,7 +1,8 @@
-import React, { useEffect,useReducer } from "react";
+import React, { useEffect,useReducer, useRef } from "react";
 import "./css/Body.css";
 import RestaurantCard from "./Res-Card";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 
 
@@ -34,19 +35,27 @@ const reducer=(state,action)=>{
 
 const Body = () => {
     const[filteredData,setFilteredData]=useState([]);
+    const [restaurantData,setRestaurantData]=useState([]);
+    const [offset, setOffset] = useState(0);
+    const [loading, setLoading] = useState(false);
+
     const[searchText,setSearchText]=useState("");
-    
+    const loaderRef=useRef(null);
     
 
     const fetchData = async () => {
+        if (loading) return; // Prevent multiple API calls
+        setLoading(true);
+        
         const dataNew = await fetch( API_URL);
         const jsonData = await dataNew.json();
         const length=jsonData.data.cards[4].card.card.gridElements.infoWithStyle.restaurants.length;
-       dispatch({
+        const resturants=jsonData.data.cards[4].card.card.gridElements.infoWithStyle.restaurants;
+        dispatch({
         type:`setDataLength`,
         payload:length
        })
-        setFilteredData(jsonData.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
+        setFilteredData(resturants);
     };
 
     useEffect(() => {
@@ -60,6 +69,29 @@ const Body = () => {
     }
     const [state,dispatch]=useReducer(reducer,initialState);
 
+    // Infinite Scroll Logic
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    dispatch({ type: "increment", payload: 6 }); // Load 6 more cards
+                }
+            },
+            { threshold: 1.0 }
+        );
+
+        if (loaderRef.current) {
+            observer.observe(loaderRef.current);
+        }
+
+        return () => {
+            if (loaderRef.current) {
+                observer.unobserve(loaderRef.current);
+            }
+        };
+    }, [loaderRef]);
+
+
     const handleAdd = () =>{
       dispatch({
         type:"increment",
@@ -72,6 +104,7 @@ const Body = () => {
         type:`decrement`,
        })
     }
+    
 
     const filterTopRated = async () =>{
         const dataNew = await fetch(API_URL);
@@ -114,12 +147,23 @@ const Body = () => {
                 </div>
             
             <div className="restaurant-container">
-                {filteredData.slice(0,state.cardCount).map((resutrant)=>(<RestaurantCard  key={resutrant.info.id} props={resutrant}/>))}
+                {filteredData.slice(0,state.cardCount).map((resutrant)=>
+                (
+                    <Link to={"/restaurant/"+resutrant.info.id} className="restaurant-link" key={resutrant.info.id}>
+                    <RestaurantCard  key={resutrant.info.id} props={resutrant}/>
+                    </Link>
+                    )
+                    
+                    )
+                    }
                 
                 
 
                 
         </div>
+        <div ref={loaderRef} style={{ height: "50px", margin: "10px 0" }}>
+                <Shimmer />
+            </div>
         </div>
     );
 };

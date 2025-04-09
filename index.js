@@ -7,6 +7,7 @@ import { createBrowserRouter,RouterProvider,Outlet } from 'react-router-dom';
 import Body from './src/Component/Body';
 import About from './src/Component/About';
 import Contact from './src/Component/Contact';
+import ResMenu from './src/Component/ResMenu';
 
 
 // Header
@@ -63,6 +64,10 @@ const App=()=>
             path: '/contact',
             element: <Contact />
             
+          },
+          {
+            path:'/restaurant/:resId',
+            element:<ResMenu/>
           }
         ]
       }

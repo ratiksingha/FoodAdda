@@ -10,6 +10,10 @@
   "author": "Ratik Singh",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@fontsource/roboto": "^5.2.5",
+    "@mui/material": "^7.0.1",
     "axios": "^1.8.4",
     "bootstrap": "^5.3.4",
     "parcel": "^2.13.3",
@@ -22,6 +26,7 @@
     "@babel/preset-env": "^7.16.7",
     "@babel/preset-react": "^7.16.7",
     "babel-jest": "^27.4.5",
+    "buffer": "^6.0.3",
     "jest": "^27.4.7",
     "process": "^0.11.10"
   },
