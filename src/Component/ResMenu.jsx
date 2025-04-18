@@ -1,31 +1,18 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { MENU_API_URL } from '../utils/constant';
+
+import React from 'react';
+import useResMenu from '../utils/useResMenu'; // Custom hook to fetch restaurant menu data
+
 import { useParams } from 'react-router-dom';
 import { Box, Typography, List, ListItem, Card, CardContent, CardMedia } from '@mui/material';
 
 const ResMenu = () => {
-  const [resMenu, setResMenu] = useState([]);
+const { resId } = useParams(); // Access restaurant ID from URL
+ 
+const menuData=useResMenu(resId);
 
-  useEffect(() => {
-    fetchMenu();
-  }, []);
-
-  const { resId } = useParams(); // Access restaurant ID from URL
-  const fetchMenu = async () => {
-    try {
-      const response = await axios.get(
-        MENU_API_URL + resId
-      );
-      const data = response.data.data.cards;
-      setResMenu(data);
-    } catch (err) {
-      console.log('Error in making the API call');
-    }
-  };
-
-  const restaurantInfo = resMenu[2]?.card?.card?.info;
-  const menuItems = resMenu[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+  const restaurantInfo = menuData.restaurantInfo;
+  const menuItems = menuData.menuItems;
+ 
   const { avgRating, name, imageUrl } = restaurantInfo || {};
   const restaurantName = name || "Loading...";
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { LOGO_URL } from "../utils/constant";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 import {
   AppBar,
@@ -21,6 +22,9 @@ const navLinks = [
 ];
 
 const Header = () => {
+
+    isOnline=useOnlineStatus();
+    const OnlineStatus = isOnline ? "✅" : "🔴";
   return (
     <AppBar
       position="static"
@@ -77,6 +81,11 @@ const Header = () => {
                 </ListItemButton>
               </ListItem>
             ))}
+            <ListItem disablePadding sx={{ width: "auto" }}>
+                
+                    {OnlineStatus }
+                
+                </ListItem>
           </List>
         </Box>
       </Toolbar>

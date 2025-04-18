@@ -3,6 +3,7 @@ import RestaurantCard from "./Res-Card";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { API_URL } from "../utils/constant";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 // MUI imports
 import {
@@ -113,6 +114,9 @@ const Body = () => {
   // if(filteredData.length===0){
   //     return <Shimmer/>
   // }
+  if (useOnlineStatus() === false) {
+    return <div className="error">Please check your internet connection</div>;
+  }
 
   return filteredData.length === 0 ? (
     <Shimmer />
