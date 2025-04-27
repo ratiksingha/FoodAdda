@@ -23,7 +23,7 @@ const navLinks = [
 
 const Header = () => {
 
-    isOnline=useOnlineStatus();
+    const isOnline=useOnlineStatus();
     const OnlineStatus = isOnline ? "✅" : "🔴";
   return (
     <AppBar

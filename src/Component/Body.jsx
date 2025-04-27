@@ -1,9 +1,10 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState, lazy, Suspense } from "react";
 import RestaurantCard from "./Res-Card";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { API_URL } from "../utils/constant";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import useResturantData from "../utils/useResturantData";
 
 // MUI imports
 import {
@@ -14,26 +15,30 @@ import {
   Container,
   Grid,
 } from "@mui/material";
+import useResturantData from "../utils/useResturantData";
 
-//Reducer Logic 
+const LazyRestaurantCard = lazy(() => import("./Res-Card"));
+
+// Reducer Logic
 const reducer = (state, action) => {
-  if (action.type === "increment") {
-    return {
-      ...state,
-      cardCount: Math.min(state.cardCount + 1, state.dataLength),
-    };
-  } else if (action.type === "decrement") {
-    return {
-      ...state,
-      cardCount: Math.max(state.cardCount - 1, 0),
-    };
-  } else if (action.type === "setDataLength") {
-    return {
-      ...state,
-      dataLength: action.payload,
-    };
-  } else {
-    return state;
+  switch (action.type) {
+    case "increment":
+      return {
+        ...state,
+        cardCount: Math.min(state.cardCount + 4, state.dataLength),
+      };
+    case "decrement":
+      return {
+        ...state,
+        cardCount: Math.max(state.cardCount - 1, 0),
+      };
+    case "setDataLength":
+      return {
+        ...state,
+        dataLength: action.payload,
+      };
+    default:
+      return state;
   }
 };
 
@@ -42,7 +47,7 @@ const Body = () => {
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
 
-  //Initial state of Reducer
+  // Initial state of Reducer
   const initialState = {
     cardCount: 8,
     dataLength: 0,
@@ -56,14 +61,15 @@ const Body = () => {
     setLoading(true);
 
     try {
-      const dataNew = await fetch(API_URL); // Fetch all data at once
-      const jsonData = await dataNew.json();
+      const response = await fetch(API_URL);
+      const jsonData = await response.json();
+     // console.log(jsonData.data.cards[1].card.card.gridElements.infoWithStyle.restaurants);
 
       const restaurants =
-        jsonData.data.cards[4].card.card.gridElements.infoWithStyle.restaurants;
+      jsonData.data.cards[1].card.card.gridElements.infoWithStyle.restaurants || [];
 
       dispatch({
-        type: `setDataLength`,
+        type: "setDataLength",
         payload: restaurants.length, // Set the total number of restaurants
       });
 
@@ -79,7 +85,7 @@ const Body = () => {
     fetchData();
   }, []);
 
-  // Infinite Scroll Logic
+
   const handleAdd = () => {
     dispatch({ type: "increment" });
   };
@@ -89,18 +95,22 @@ const Body = () => {
   };
 
   const filterTopRated = async () => {
-    const dataNew = await fetch(API_URL);
-    const jsonData = await dataNew.json();
+    try {
+      const response = await fetch(API_URL);
+      const jsonData = await response.json();
 
-    //Accessing data again
-    const liveData =
-      jsonData.data.cards[4].card.card.gridElements.infoWithStyle.restaurants;
+      const liveData =
+        jsonData?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants || [];
 
-    const newFilteredData = liveData.filter(
-      (restaurant) => restaurant.info.avgRating > 4.2
-    );
+      const newFilteredData = liveData.filter(
+        (restaurant) => restaurant.info.avgRating > 4.2
+      );
 
-    setFilteredData(newFilteredData);
+      setFilteredData(newFilteredData);
+    } catch (error) {
+      console.error("Error filtering top-rated restaurants:", error);
+    }
   };
 
   const handleSearch = () => {
@@ -110,17 +120,14 @@ const Body = () => {
     setFilteredData(newFilteredData);
   };
 
-  //Conditional Rendering 
-  // if(filteredData.length===0){
-  //     return <Shimmer/>
-  // }
-  if (useOnlineStatus() === false) {
+  //const moreResturant= useResturantData();
+
+
+  if (!useOnlineStatus()) {
     return <div className="error">Please check your internet connection</div>;
   }
 
-  return filteredData.length === 0 ? (
-    <Shimmer />
-  ) : (
+  return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Box
         sx={{
@@ -159,22 +166,44 @@ const Body = () => {
         </Stack>
       </Box>
 
-      {/* Restaurant Cards Grid */}
-      <Grid container spacing={3}>
-        {filteredData.slice(0, state.cardCount).map((restaurant) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={restaurant.info.id}>
-            <Link
-              to={"/restaurant/" + restaurant.info.id}
-              style={{
-                textDecoration: "none", // Remove underline
-                color: "inherit", // Remove default blue color
-              }}
-            >
-              <RestaurantCard props={restaurant} />
-            </Link>
+      {/* Conditional Rendering */}
+      {loading ? (
+        <Shimmer />
+      ) : (
+        <>
+          {/* Restaurant Cards Grid */}
+          <Grid container spacing={3}>
+            {filteredData.slice(0, state.cardCount).map((restaurant, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={restaurant.info.id}>
+                <Link
+                  to={"/restaurant/" + restaurant.info.id}
+                  style={{
+                    textDecoration: "none", // Remove underline
+                    color: "inherit", // Remove default blue color
+                  }}
+                >
+                  {index < state.cardCount - 4 ? (
+                    <RestaurantCard props={restaurant} />
+                  ) : (
+                    <Suspense fallback={<div>Loading card...</div>}>
+                      <LazyRestaurantCard props={restaurant} />
+                    </Suspense>
+                  )}
+                </Link>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+
+          {/* Show More Button */}
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+            {state.cardCount < filteredData.length && (
+              <Button variant="contained" onClick={handleAdd}>
+                Show More
+              </Button>
+            )}
+          </Box>
+        </>
+      )}
     </Container>
   );
 };
