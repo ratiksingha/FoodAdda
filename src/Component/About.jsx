@@ -20,7 +20,7 @@ const About = () => {
 
   async function fetchGithubData() {
     try {
-      const response = await axios.get('https://api.github.com/users/Cager2808');
+      const response = await axios.get('https://api.github.com/users/ratiksingha');
       setUserData(response.data);
     } catch (error) {
       console.error('Error fetching GitHub data:', error);
