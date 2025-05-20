@@ -16,14 +16,17 @@ const useResMenu = (resId)=>{
               MENU_API_URL + resId
             );
             const data = response.data.data.cards;
+             
             setResMenu(data);
           } catch (err) {
             console.log('Error in making the API call');
           }
     }
     const restaurantInfo = resMenu[2]?.card?.card?.info;
-    const menuItems = resMenu[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+   
+    const menuItems = resMenu[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(c => c.card?.card?.["@type"]=== "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory");
     
+   console.log("menuItems",menuItems);
     return {restaurantInfo, menuItems};
 
 }

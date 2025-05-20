@@ -47,7 +47,7 @@ const Body = () => {
 
   useEffect(() => {
     if (location.lat && location.lng) {
-   console.log("inside useEffect");
+  
       fetchData();
     }
     // eslint-disable-next-line
@@ -62,7 +62,7 @@ const Body = () => {
       const response = await fetch(getApiUrl(location.lat, location.lng));
       
       const jsonData = await response.json();
-      console.log("Data fetched:", jsonData);
+      
       const restaurants =
         jsonData.data.cards[1].card.card.gridElements.infoWithStyle.restaurants || [];
       setFilteredData(restaurants);
