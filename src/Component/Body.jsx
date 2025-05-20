@@ -1,12 +1,10 @@
 import React, { useEffect, useReducer, useState, lazy, Suspense } from "react";
-import RestaurantCard from "./Res-Card";
+import RestaurantCard, { isTopRestaurant } from "./Res-Card";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-import { API_URL } from "../utils/constant";
+import { getApiUrl } from "../utils/constant";
 import useOnlineStatus from "../utils/useOnlineStatus";
-import useResturantData from "../utils/useResturantData";
-
-// MUI imports
+import useLocation from "../utils/useLocation";
 import {
   Box,
   Button,
@@ -15,27 +13,24 @@ import {
   Container,
   Grid,
 } from "@mui/material";
-import useResturantData from "../utils/useResturantData";
 
 const LazyRestaurantCard = lazy(() => import("./Res-Card"));
 
-// Reducer Logic
+const initialState = {
+  cardCount: 8,
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "increment":
       return {
         ...state,
-        cardCount: Math.min(state.cardCount + 4, state.dataLength),
+        cardCount: state.cardCount + 4,
       };
     case "decrement":
       return {
         ...state,
         cardCount: Math.max(state.cardCount - 1, 0),
-      };
-    case "setDataLength":
-      return {
-        ...state,
-        dataLength: action.payload,
       };
     default:
       return state;
@@ -46,34 +41,26 @@ const Body = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
-
-  // Initial state of Reducer
-  const initialState = {
-    cardCount: 8,
-    dataLength: 0,
-  };
+  const { location } = useLocation();
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // API Fetching Logic
+  useEffect(() => {
+    if (location.lat && location.lng) {
+      fetchData();
+    }
+    // eslint-disable-next-line
+  }, [location]);
+
   const fetchData = async () => {
-    if (loading) return; // Prevent multiple API calls
+    if (loading) return;
     setLoading(true);
-
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(getApiUrl(location.lat, location.lng));
       const jsonData = await response.json();
-     // console.log(jsonData.data.cards[1].card.card.gridElements.infoWithStyle.restaurants);
-
       const restaurants =
-      jsonData.data.cards[1].card.card.gridElements.infoWithStyle.restaurants || [];
-
-      dispatch({
-        type: "setDataLength",
-        payload: restaurants.length, // Set the total number of restaurants
-      });
-
-      setFilteredData(restaurants); // Store all restaurants
+        jsonData.data.cards[1].card.card.gridElements.infoWithStyle.restaurants || [];
+      setFilteredData(restaurants);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -81,10 +68,9 @@ const Body = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  
 
+  const TopRestaurantCard = isTopRestaurant(RestaurantCard);
 
   const handleAdd = () => {
     dispatch({ type: "increment" });
@@ -96,17 +82,14 @@ const Body = () => {
 
   const filterTopRated = async () => {
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(getApiUrl(location.lat, location.lng));
       const jsonData = await response.json();
-
       const liveData =
         jsonData?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants || [];
-
       const newFilteredData = liveData.filter(
         (restaurant) => restaurant.info.avgRating > 4.2
       );
-
       setFilteredData(newFilteredData);
     } catch (error) {
       console.error("Error filtering top-rated restaurants:", error);
@@ -119,9 +102,6 @@ const Body = () => {
     );
     setFilteredData(newFilteredData);
   };
-
-  //const moreResturant= useResturantData();
-
 
   if (!useOnlineStatus()) {
     return <div className="error">Please check your internet connection</div>;
@@ -178,16 +158,20 @@ const Body = () => {
                 <Link
                   to={"/restaurant/" + restaurant.info.id}
                   style={{
-                    textDecoration: "none", // Remove underline
-                    color: "inherit", // Remove default blue color
+                    textDecoration: "none",
+                    color: "inherit",
                   }}
                 >
-                  {index < state.cardCount - 4 ? (
-                    <RestaurantCard props={restaurant} />
+                  {restaurant.info.avgRating >= 4.6 ? (
+                    <TopRestaurantCard props={restaurant} />
                   ) : (
-                    <Suspense fallback={<div>Loading card...</div>}>
-                      <LazyRestaurantCard props={restaurant} />
-                    </Suspense>
+                    index < state.cardCount - 4 ? (
+                      <RestaurantCard props={restaurant} />
+                    ) : (
+                      <Suspense fallback={<div>Loading card...</div>}>
+                        <LazyRestaurantCard props={restaurant} />
+                      </Suspense>
+                    )
                   )}
                 </Link>
               </Grid>

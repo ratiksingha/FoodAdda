@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { LOGO_URL } from "../utils/constant";
+
+import SVGComponent from "../utils/SVGComponent";
+
 import useOnlineStatus from "../utils/useOnlineStatus";
 
 import {
@@ -40,11 +42,7 @@ const Header = () => {
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         {/* Logo */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Avatar
-            src={LOGO_URL}
-            alt="Company Logo"
-            sx={{ width: 50, height: 50, mr: 2 }}
-          />
+           <SVGComponent width={50} height={50} />
         </Box>
 
         {/* Navigation */}
