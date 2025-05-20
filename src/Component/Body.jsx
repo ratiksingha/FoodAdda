@@ -41,12 +41,13 @@ const Body = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const { location } = useLocation();
-
+  const { location , isLoaded} = useLocation();
   const [state, dispatch] = useReducer(reducer, initialState);
+  
 
   useEffect(() => {
     if (location.lat && location.lng) {
+   console.log("inside useEffect");
       fetchData();
     }
     // eslint-disable-next-line
@@ -54,10 +55,14 @@ const Body = () => {
 
   const fetchData = async () => {
     if (loading) return;
-    setLoading(true);
+     if (!location.lat || !location.lng) return;
+  setLoading(true);
     try {
+      console.log("Fetching data...");
       const response = await fetch(getApiUrl(location.lat, location.lng));
+      
       const jsonData = await response.json();
+      console.log("Data fetched:", jsonData);
       const restaurants =
         jsonData.data.cards[1].card.card.gridElements.infoWithStyle.restaurants || [];
       setFilteredData(restaurants);

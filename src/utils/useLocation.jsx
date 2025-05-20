@@ -1,33 +1,22 @@
-import { useState, useEffect } from "react";
-
-
-const DEFAULT_LOCATION = {lat : 30.7333148, lng: 76.7794179};
-
-const useLocation=() => {
-
-const [location, setLocation] = useState(DEFAULT_LOCATION);
-  const [error, setError] = useState(null);
+const useLocation = () => {
+  const [location, setLocation] = useState(DEFAULT_LOCATION);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (!navigator.geolocation) {
-      setError("Geolocation is not supported.");
-      return;
-    }
+    if (!navigator.geolocation) return;
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setLocation({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         });
+        setIsLoaded(true);
       },
-      (err) => {
-        setError("Unable to retrieve location.");
-        setLocation(DEFAULT_LOCATION);
-      }
+      () => setIsLoaded(true)
     );
   }, []);
 
-  return { location, error };
+  return { location, isLoaded };
 };
 
 export default useLocation;

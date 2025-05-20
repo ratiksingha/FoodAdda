@@ -10,4 +10,6 @@ export const MENU_API_URL="https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR
 
 // Dynamic API URL generator
 export const getApiUrl = (lat, lng) =>
-  `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`;
+  `https://fa-proxy-three.vercel.app/api/swiggy?lat=${lat}&lng=${lng}`
+
+  // `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`;
