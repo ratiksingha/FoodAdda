@@ -1,4 +1,8 @@
 import { useEffect,useState } from "react"
+const DEFAULT_LOCATION = {
+  lat: 28.6139,
+  lng: 77.209,
+};
 
 const useLocation = () => {
   const [location, setLocation] = useState(DEFAULT_LOCATION);
