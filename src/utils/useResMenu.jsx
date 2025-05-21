@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { MENU_API_URL } from "./constant";
+import { MENU_API_URL  } from "./constant";
 
 const useResMenu = (resId)=>{
 
@@ -26,7 +26,7 @@ const useResMenu = (resId)=>{
    
     const menuItems = resMenu[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(c => c.card?.card?.["@type"]=== "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory");
     
-   console.log("menuItems",menuItems);
+   
     return {restaurantInfo, menuItems};
 
 }

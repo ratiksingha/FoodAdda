@@ -5,11 +5,15 @@ const ItemList = ({ items }) => {
         <div>
             <div>
                 {items.map((item) => (
+                  
                     <div
                         key={item.card.info.id}
-                        className="p-2 m-2 border-gray-200 border-b-2 text-left flex items-start"
+
+                        
+                        className="  p-2 m-2 border-gray-200 border-b-2 text-left flex items-start justify-between"
                     >
-                        <div className="flex-1 pr-4">
+                        <div className="flex-1 pr-2">
+                            <span className="text-xs mr-1">{(item.card.info.isVeg)?"🟢 ":"🔴 "}</span>
                             <span className="font-semibold">{item.card.info.name}</span>
                             <span>
                                 {" "}
@@ -22,13 +26,16 @@ const ItemList = ({ items }) => {
                                 <p>{item.card.info.description}</p>
                             </div>
                         </div>
-                        <div>
-                            <img
-                                src={IMG_CDN_URL + item.card.info.imageId}
-                                className="w-20 h-16 object-cover rounded"
-                                alt={item.card.info.name}
-                            />
-                        </div>
+                <div className=" w-3/12 p-4 flex flex-col  items-center justify-between">
+                    <img
+                        src={IMG_CDN_URL + item.card.info.imageId}
+                        className="w-full object-cover rounded mb-2"
+                        alt={item.card.info.name}
+                    />
+                    <button className="p-2 bg-white shadow-lg rounded-lg text-xs border border-gray-200 hover:bg-gray-100 transition  self-center">
+                        Add +
+                    </button>
+                </div>
                     </div>
                 ))}
             </div>
