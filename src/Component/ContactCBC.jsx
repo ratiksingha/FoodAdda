@@ -3,7 +3,6 @@ import {
   Container,
   Typography,
   TextField,
-  TextareaAutosize,
   Button,
   Box,
   Paper,
@@ -13,6 +12,9 @@ class ContactCBC extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: '',
+      email: '',
+      message: '',
       count: 0,
     };
     console.log('Constructor called');
@@ -20,9 +22,9 @@ class ContactCBC extends React.Component {
 
   componentDidMount() {
     console.log('ComponentDidMount called');
-    setTimeout(() => {
-      this.setState({ count: 1 });
-    }, 1000);
+    // setTimeout(() => {
+    //   this.setState({ count: 1 });
+    // }, 1000);
   }
 
   componentDidUpdate() {
@@ -33,13 +35,23 @@ class ContactCBC extends React.Component {
     console.log('ComponentWillUnmount called');
   }
 
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState((prevState) => ({ count: prevState.count + 1 }));
+    this.setState((prevState) => ({
+      name: '',
+      email: '',
+      message: '',
+      count: prevState.count + 1,
+    }));
   };
 
   render() {
     console.log('Render method called');
+    const { name, email, message, count } = this.state;
 
     return (
       <Container maxWidth="sm" sx={{ mt: 5 }}>
@@ -55,11 +67,28 @@ class ContactCBC extends React.Component {
             onSubmit={this.handleSubmit}
             sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 3 }}
           >
-            <TextField label="Name" name="name" required fullWidth />
-            <TextField label="Email" name="email" type="email" required fullWidth />
+            <TextField
+              label="Name"
+              name="name"
+              value={name}
+              onChange={this.handleChange}
+              required
+              fullWidth
+            />
+            <TextField
+              label="Email"
+              name="email"
+              type="email"
+              value={email}
+              onChange={this.handleChange}
+              required
+              fullWidth
+            />
             <TextField
               label="Message"
               name="message"
+              value={message}
+              onChange={this.handleChange}
               required
               fullWidth
               multiline
@@ -70,7 +99,7 @@ class ContactCBC extends React.Component {
             </Button>
           </Box>
           <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-            No of Queries: {this.state.count}
+            No of Queries: {count}
           </Typography>
         </Paper>
       </Container>

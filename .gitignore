@@ -11,3 +11,7 @@
 ```
 .parcel-cache/data.mdb
 /.parcel-cache/lock.mdb
+
+firebase
+
+.parcel-cache/lock.mdb
