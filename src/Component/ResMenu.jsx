@@ -17,14 +17,19 @@ const menuData=useResMenu(resId);
   const menuItems = menuData.menuItems;
 
   const [showIndex,setShowIndex]=useState(null);
+  console.log(restaurantInfo);
 
-  const { avgRating, name ,cloudinaryImageId } = restaurantInfo || {};
+  const { avgRating, name ,costForTwoMessage } = restaurantInfo || {};
  
   const restaurantName = name || "Loading...";
 
   return (
     <div className='text-center'>
-      <h1 className='font-bold my-10 text-2xl'>{name}</h1>
+      <h1 className='font-bold my-8 text-2xl'>{restaurantName}</h1>
+      <p className='text-center'>Rating:{avgRating}</p>
+      <p>{costForTwoMessage}</p>
+      <br />
+      
 
       {/* Accordion */}
       {
