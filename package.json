@@ -1,8 +1,9 @@
 {
   "name": "foodadda",
   "version": "1.0.0",
-  "description": "Demo for Learning React",
+  "description": "A Swiggy Cloned App",
   "scripts": {
+    "clean": "parcel clean",
     "start": "parcel index.html",
     "build": "parcel build index.html",
     "test": "jest"
@@ -12,15 +13,12 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-   
     "@fontsource/roboto": "^5.2.5",
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.1",
     "@tailwindcss/postcss": "^4.1.4",
     "axios": "^1.8.4",
     "bootstrap": "^5.3.4",
-    
-    "parcel": "^2.13.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "6.11",
@@ -34,6 +32,7 @@
     "babel-jest": "^27.4.5",
     "buffer": "^6.0.3",
     "jest": "^27.4.7",
+    "parcel": "^2.15.2",
     "process": "^0.11.10"
   },
   "browserlist": [

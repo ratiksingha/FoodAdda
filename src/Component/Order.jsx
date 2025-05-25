@@ -1,8 +1,8 @@
 const Order=()=>{
+    console.log("inside Order component");
     return(
         <div>
-            <h1>Order</h1>
-            <p>Order page content goes here.</p>
+            {/* <ItemList items={cart.items} /> */}
         </div>
     )
 }
