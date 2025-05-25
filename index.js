@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter,RouterProvider,Outlet } from 'react-router-dom';
-import Header from './src/component/Header';
-import Footer from './src/component/Footer';
+import Header from './src/Component/Header';
+import Footer from './src/Component/Footer';
 
-import Body from './src/component/Body';
-import About from './src/component/About';
-import Contact from './src/component/ContactCBC';
-import ResMenu from './src/component/ResMenu';
+import Body from './src/Component/Body';
+import About from './src/Component/About';
+import Contact from './src/Component/ContactCBC';
+import ResMenu from './src/Component/ResMenu';
 import './index.css';
 
-import Order from './src/component/Order';
+import Order from './src/Component/Order';
 
 
 // Header
