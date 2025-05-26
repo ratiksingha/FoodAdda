@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter,RouterProvider,Outlet } from 'react-router-dom';
 import Header from './src/Component/Header';
 import Footer from './src/Component/Footer';
-import Error from './src/Component/Error';
+
 import Body from './src/Component/Body';
 import About from './src/Component/About';
 import Contact from './src/Component/ContactCBC';
@@ -13,26 +13,7 @@ import './index.css';
 import Order from './src/Component/Order';
 
 
-// Header
-// - Logo
-// - Nav Items
 
-// Body
-// - Search
-// - Restaurant Container
-//  - Restaurant Card
-//  - Dish Name
-//  - Image
-//  - Restaurant Name
-//  - Rating
-//  - Cuisines
-//  - Time to Deliver
-
-// Footer
-// - Copyright
-// - Links
-// - Address
-// - Contact 
 
 
 const App=()=>
@@ -76,8 +57,8 @@ const App=()=>
             path:'/order',
             element:<Order/>
           }
-        ],
-        errorElement: <Error />
+        ]
+        
 
       }
       
