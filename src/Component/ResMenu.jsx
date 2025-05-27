@@ -17,7 +17,7 @@ const menuData=useResMenu(resId);
   const menuItems = menuData.menuItems;
 
   const [showIndex,setShowIndex]=useState(null);
-  console.log(restaurantInfo);
+  
 
   const { avgRating, name ,costForTwoMessage } = restaurantInfo || {};
  

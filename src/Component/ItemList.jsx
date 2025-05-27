@@ -1,7 +1,14 @@
 import {IMG_CDN_URL} from "../utils/constant";
+import { useDispatch } from "react-redux";
+import { addItem } from "../slice/cartSlice";
 
 
 const ItemList = ({ items }) => {
+
+    const dispatch = useDispatch();
+    const handleAddItem=(item)=>{
+        dispatch (addItem(item));
+    }
 
    
 
@@ -37,7 +44,7 @@ const ItemList = ({ items }) => {
                         className="w-full object-cover rounded mb-2"
                         alt={item.card.info.name}
                     />
-                    <button className="p-2 bg-white shadow-lg rounded-lg text-xs border border-gray-200 hover:bg-gray-100 transition  self-center" >
+                    <button className="p-2 bg-white shadow-lg rounded-lg text-xs border border-gray-200 hover:bg-gray-100 transition  self-center"  onClick={() => handleAddItem(item)}>
                         Add +
                     </button>
                 </div>

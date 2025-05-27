@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "A Swiggy Cloned App",
   "scripts": {
-    "clean": "parcel clean",
-    "start": "parcel index.html",
+    
+    "start": "set TMPDIR=D:\\Projects\\NamsateReact\\tmp && parcel index.html",
     "build": "parcel build index.html",
     "test": "jest"
   },
@@ -16,6 +16,7 @@
     "@fontsource/roboto": "^5.2.5",
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.1",
+    "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/postcss": "^4.1.4",
     "axios": "^1.8.4",
     "bootstrap": "^5.3.4",
@@ -23,6 +24,7 @@
     "lucide-react": "^0.511.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "6.11",
     "tailwindcss": "^4.1.4"
   },

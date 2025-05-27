@@ -10,7 +10,9 @@ import Contact from './src/Component/ContactCBC';
 import ResMenu from './src/Component/ResMenu';
 import './index.css';
 
-import Order from './src/Component/Order';
+import Cart from './src/Component/Cart';
+import { Provider } from 'react-redux';
+import appStore from './src/redux/appStore';
 
 
 
@@ -18,7 +20,8 @@ import Order from './src/Component/Order';
 
 const App=()=>
    (
-    <div className='App'>
+    <Provider store={appStore}>
+    <div className='App'> 
       <div className='App-header'>
         <Header/>
         </div>
@@ -26,9 +29,10 @@ const App=()=>
         <Outlet/>
         </div>
       <div className='App-footer'>
-        <Footer/>
+        <Footer/>  
       </div>
     </div>
+     </Provider>
     );
 
     const router = createBrowserRouter([
@@ -54,8 +58,8 @@ const App=()=>
             element:<ResMenu/>
           },
           {
-            path:'/order',
-            element:<Order/>
+            path:'/cart',
+            element:<Cart/>
           }
         ]
         
@@ -69,6 +73,9 @@ const App=()=>
 const root=ReactDOM.createRoot(document.getElementById("root"));
 root.render(
    <React.StrictMode>
+
     <RouterProvider router={router}/>
+
+   
    </React.StrictMode>
  );

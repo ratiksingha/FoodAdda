@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import SVGComponent from "../utils/SVGComponent";
+import { useSelector } from "react-redux";  
 
 import useOnlineStatus from "../utils/useOnlineStatus";
 
@@ -15,79 +16,51 @@ import {
   ListItemText,
   Avatar,
 } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "About Us", path: "/about" },
-  { label: "🛒", path: "/order" },
+  { label: "🛒 ", path: "/cart" },
   { label: "Contact", path: "/contact" },
 ];
 
 const Header = () => {
+  const cart = useSelector((store) => store.cart.items);
+  const cartItemsCount = cart.length;
 
-    const isOnline=useOnlineStatus();
-    const OnlineStatus = isOnline ? "✅" : "🔴";
+  const isOnline = useOnlineStatus();
+  const OnlineStatus = isOnline ? "✅" : "🔴";
+
   return (
-    <AppBar
-      position="static"
-      elevation={0}
-      sx={{
-        backgroundColor: "rgba(255, 255, 255, 0.7)",
-        backdropFilter: "blur(10px)",
-        WebkitBackdropFilter: "blur(10px)",
-        borderBottom: "2px solid rgba(0, 0, 0, 0.2)",
-        color: "#000",
-      }}
-    >
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+    <header className="sticky top-0 z-50 bg-white/70 backdrop-blur border-b-2 border-black/20 text-black">
+      <nav className="flex items-center justify-between px-6 py-2">
         {/* Logo */}
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-           <SVGComponent width={50} height={50} />
-        </Box>
+        <div className="flex items-center">
+          <SVGComponent width={50} height={50} />
+        </div>
 
         {/* Navigation */}
-        <Box>
-          <List sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 2 }}>
-            {navLinks.map(({ label, path }) => (
-              <ListItem key={label} disablePadding sx={{ width: "auto" }}>
-                <ListItemButton
-                  component={Link}
-                  to={path}
-                  sx={{
-                    color: "#000",
-                    borderRadius: "8px",
-                    whiteSpace: "normal", // Allow text to wrap
-                    wordBreak: "break-word",
-                    textAlign: "center",
-                    minWidth: "auto", // Don't force a fixed width
-                    px: 2,
-                    py: 1,
-                    "&:hover": {
-                      backgroundColor: "rgba(0,0,0,0.05)",
-                    },
-                  }}
-                >
-                  <ListItemText
-                    primary={label}
-                    primaryTypographyProps={{
-                      sx: {
-                        fontWeight: 500,
-                        lineHeight: 1.2,
-                      },
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))}
-            <ListItem disablePadding sx={{ width: "auto" }}>
-                
-                    {OnlineStatus }
-                
-                </ListItem>
-          </List>
-        </Box>
-      </Toolbar>
-    </AppBar>
+        <ul className="flex flex-row flex-wrap gap-4 items-center m-0 p-0 list-none">
+          {navLinks.map(({ label, path }) => (
+            <li key={label} className="w-auto">
+              <Link
+                to={path}
+                className="block px-4 py-2 rounded-lg text-black font-medium text-center whitespace-normal break-words transition hover:bg-black/5"
+              >
+                {label}
+                {label === "🛒 " && (
+                  <span className="ml-1 text-xs font-semibold align-top">
+                    ({cartItemsCount})
+                  </span>
+                )}
+              </Link>
+            </li>
+          ))}
+          <li className="w-auto text-xl">{OnlineStatus}</li>
+        </ul>
+      </nav>
+    </header>
   );
 };
 
