@@ -1,8 +1,18 @@
 import { useSelector } from "react-redux";
 import { IMG_CDN_URL } from "../utils/constant";
+import { useDispatch } from "react-redux";
+import { addItem ,removeItem,clearCart } from "../slice/cartSlice";
 
 const Cart = () => {
   const cart = useSelector((store) => store.cart);
+  const dispatch = useDispatch();
+    const handleAddItem = (item) => {
+        dispatch(addItem(item));
+    }
+    const handleRemoveItem = (item) => {
+        dispatch(removeItem(item));
+    }
+
 
   return (
     <div>
@@ -33,13 +43,29 @@ const Cart = () => {
                     : item.card.info.defaultPrice / 100}
                 </p>
                 <p className="text-sm text-gray-500">{item.card.info.description}</p>
-                <p className="text-sm font-semibold mt-2">
+                
+                <button className="mt-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition" 
+                onClick={() => handleAddItem(item)}>
+                    +
+                </button>
+                    <p className="text-sm font-semibold mt-2">
                   Quantity: {item.quantity || 1}
                 </p>
+                <button className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+                onClick={()=> handleRemoveItem(item)}
+                >
+                   -
+                </button>
+                
               </div>
             </div>
           ))
         )}
+        <button className="mt-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                onClick={() => dispatch(clearCart())}
+                >
+                  Clear Cart
+                </button>
       </div>
     </div>
   );

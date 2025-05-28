@@ -18,15 +18,16 @@ export const cartslice =createSlice({
         }
     },
     removeItem: (state, action) => {
-        // Optionally, you can decrease quantity or remove item
         const id = action.payload.card.info.id;
         const existingItem = state.items.find(
             (i) => i.card.info.id === id
         );
-        if (existingItem && existingItem.quantity > 1) {
-            existingItem.quantity -= 1;
-        } else {
-            state.items = state.items.filter((i) => i.card.info.id !== id);
+        if (existingItem) {
+            if (existingItem.quantity && existingItem.quantity > 1) {
+                existingItem.quantity -= 1;
+            } else {
+                state.items = state.items.filter((i) => i.card.info.id !== id);
+            }
         }
     },
     clearCart: (state) => {
