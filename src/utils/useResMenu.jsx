@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import axios from "axios";
 import { MENU_API_URL  } from "./constant";
-
+import useLocation from "../utils/useLocation"; 
+import { getMenuApiUrl } from "./constant";  
 const useResMenu = (resId)=>{
 
+
+  
+    const { location } = useLocation();
     const [resMenu, setResMenu] = useState([]);
 
     useEffect(()=>{
@@ -13,7 +17,7 @@ const useResMenu = (resId)=>{
     const fetchMenu =async ()=>{
         try {
             const response = await axios.get(
-              MENU_API_URL + resId
+             getMenuApiUrl(resId, location.lat, location.lng)
             );
             const data = response.data.data.cards;
              
