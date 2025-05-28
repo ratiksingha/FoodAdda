@@ -113,7 +113,7 @@ const Body = () => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
+    <Container maxWidth="lg" sx={{ mt: 4 }} className="pb-24">
       <Box
         sx={{
           mb: 4,
