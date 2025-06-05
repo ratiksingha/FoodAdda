@@ -77,3 +77,7 @@ UI and UX designed from scratch, with references to modern food app patterns.
 ## 🙌 Author
 
 Made with 🍕 and ☕ by [Ratik Singh](https://github.com/ratiksingha)
+
+## Visitor
+![Visitor Count](https://komarev.com/ghpvc/?username=ratiksingha&label=Profile+Views)
+
