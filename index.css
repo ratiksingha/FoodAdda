@@ -4,16 +4,44 @@
 @import "tailwindcss/utilities"; */
 
 
-.App-header {
+/* Set Swiggy-like background for the whole page */
+body {
+  background-color: #f5f3ee;
+  min-height: 100vh;
+}
+
+/* Header styles */
+/* .App-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 100;
-  background: #fcfcfc; /* or your header's background color */
+  background: #fcfcfc;
+  box-shadow: 0 2px 8px 0 rgba(60,64,67,.07), 0 1.5px 2px 0 rgba(60,64,67,.03);
+} */
+
+/* Add top margin to main content to prevent overlap with header */
+.App-body {
+  margin-top: 80px; /* Adjust if your header is taller/shorter */
 }
 
-/* Adjust this value to match your header's height */
+/* Ensure footer stays above background and doesn't overlap content */
+footer {
+  background: #181e29;
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 50;
+}
+
+/* Add bottom padding to main content so footer doesn't overlap */
+.main-content,
+.max-w-7xl,
 .App-body {
-  margin-top: 100px;
+  padding-bottom: 80px; /* Adjust to match footer height */
 }

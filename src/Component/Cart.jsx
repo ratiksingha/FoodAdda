@@ -15,7 +15,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 pb-20">
+    <div className="min-h-screen bg-[#f5f3ee] py-8 pb-20">
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-800 tracking-tight">
         Cart
       </h1>

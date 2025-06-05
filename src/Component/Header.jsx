@@ -36,7 +36,7 @@ const Header = () => {
             <li key={label} className="w-auto">
               <Link
                 to={path}
-                className="block px-4 py-2 rounded-lg text-black font-medium text-center whitespace-normal break-words transition hover:bg-black/5"
+                className="block px-5 py-2 rounded-full text-base font-semibold text-gray-800 hover:bg-orange-50 hover:text-orange-600 transition relative"
               >
                 {label}
                 {label === "🛒 " && (

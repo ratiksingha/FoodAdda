@@ -6,7 +6,11 @@
     
     "start": "set TMPDIR=D:\\Projects\\NamsateReact\\tmp && parcel index.html",
     "build": "parcel build index.html",
-    "test": "jest"
+    "test": "jest",
+    "clean":"rm -rf .parche-cache dist",
+
+    "prev": "serve -s dist",
+    "dev":"  npm run clean && npm run build && npm run prev"
   },
   "author": "Ratik Singh",
   "license": "ISC",
