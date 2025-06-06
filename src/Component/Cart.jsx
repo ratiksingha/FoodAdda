@@ -93,11 +93,12 @@ const Cart = () => {
               >
                 Clear Cart
               </button>
-              <button>
-                <span className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold transition" onClick={handleCheckout}>
+              <button
+                  className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold transition"
+                  onClick={handleCheckout}
+                >
                   Checkout
-                </span>
-              </button>
+                </button>
               <span className="text-lg font-bold text-gray-700">
                 Total: ₹
                 {cart.items.reduce(

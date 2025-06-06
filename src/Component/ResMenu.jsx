@@ -37,7 +37,7 @@ const ResMenu = () => {
         <span>•</span>
         <span>{costForTwoMessage}</span>
       </div>
-      <hr className="my-6" />
+      <hr className="my-8" />
       {menuItems.map((category, index) => (
         <ResCatergory
           data={category.card?.card}
