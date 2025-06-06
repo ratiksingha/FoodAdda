@@ -126,49 +126,20 @@ const Body = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {filteredData.slice(0, state.cardCount).map((restaurant) => (
-                <Link
-                  to={"/restaurant/" + restaurant.info.id}
-                  key={restaurant.info.id}
-                  className="hover:no-underline"
-                >
-                  <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-200 border border-gray-100 flex flex-col overflow-hidden group h-full">
-                    <div className="relative">
-                      <img
-                        src={
-                          restaurant.info.cloudinaryImageId
-                            ? IMG_CDN_URL + restaurant.info.cloudinaryImageId
-                            : "https://via.placeholder.com/400x300?text=No+Image"
-                            }
-                        alt={restaurant.info.name}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-200"
-                        loading="lazy"
-                      />
-                      {restaurant.info.avgRating >= 4.6 && (
-                        <span className="absolute top-2 right-2 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-                          ⭐ Top Rated
-                        </span>
-                      )}
-                    </div>
-                    <div className="p-4 flex flex-col flex-1">
-                      <h3 className="text-lg font-semibold text-gray-800 mb-1 truncate">{restaurant.info.name}</h3>
-                      <div className="flex items-center text-sm text-gray-500 mb-2">
-                        <span className="mr-2 font-bold text-green-600">
-                          {restaurant.info.avgRating}★
-                        </span>
-                        <span>•</span>
-                        <span className="ml-2">{restaurant.info.sla?.slaString || "30 MINS"}</span>
-                        <span>•</span>
-                        <span className="ml-2">{restaurant.info.costForTwo || "₹200 for two"}</span>
-                      </div>
-                      <div className="text-xs text-gray-400 line-clamp-2">
-                        {restaurant.info.cuisines?.join(", ")}
-                      </div>
-                    </div>
-                  </div>
+            {filteredData.slice(0, state.cardCount).map((restaurant) => (
+              <Link
+                        to={"/restaurant/" + restaurant.info.id}
+                        key={restaurant.info.id}
+                        className="hover:no-underline"
+                      >
+                        {restaurant.info.avgRating >= 4.6 ? (
+                          <TopRestaurantCard props={restaurant} />
+                        ) : (
+                          <RestaurantCard props={restaurant} />
+                        )}
                 </Link>
-              ))}
-            </div>
+            ))}
+          </div>
           )}
 
           {/* Show More Button */}
