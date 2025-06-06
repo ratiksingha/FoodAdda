@@ -2,8 +2,10 @@ import { useSelector } from "react-redux";
 import { IMG_CDN_URL } from "../utils/constant";
 import { useDispatch } from "react-redux";
 import { addItem, removeItem, clearCart } from "../slice/cartSlice";
+import { Link , useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const cart = useSelector((store) => store.cart);
   const dispatch = useDispatch();
 
@@ -13,6 +15,14 @@ const Cart = () => {
   const handleRemoveItem = (item) => {
     dispatch(removeItem(item));
   };
+
+  const handleCheckout = () =>{
+    //When user click on checkout btn he should redirect to checkout page
+    navigate("/checkout");
+
+  }
+
+
 
   return (
     <div className="min-h-screen bg-[#f5f3ee] py-8 pb-20">
@@ -78,10 +88,15 @@ const Cart = () => {
             ))}
             <div className="flex justify-between items-center mt-8 mb-2 px-2">
               <button
-                className="px-6 py-2 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition"
+                className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition"
                 onClick={() => dispatch(clearCart())}
               >
                 Clear Cart
+              </button>
+              <button>
+                <span className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold transition" onClick={handleCheckout}>
+                  Checkout
+                </span>
               </button>
               <span className="text-lg font-bold text-gray-700">
                 Total: ₹

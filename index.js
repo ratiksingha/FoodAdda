@@ -9,10 +9,11 @@ import About from './src/Component/About';
 import Contact from './src/Component/ContactCBC';
 import ResMenu from './src/Component/ResMenu';
 import './index.css';
-
+import Checkout from './src/Component/CheckOut';
 import Cart from './src/Component/Cart';
 import { Provider } from 'react-redux';
 import appStore from './src/redux/appStore';
+
 
 
 
@@ -60,6 +61,11 @@ const App=()=>
           {
             path:'/cart',
             element:<Cart/>
+          },
+
+          {
+            path :'/checkout',
+            element:<Checkout/>
           }
         ]
         
