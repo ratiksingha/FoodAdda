@@ -1,15 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import {
-  Card,
-  CardContent,
-  Typography,
-  Avatar,
-  Button,
-  Link,
-  Box,
-  CircularProgress,
-} from '@mui/material';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const About = () => {
   const [userData, setUserData] = useState(null);
@@ -20,53 +10,44 @@ const About = () => {
 
   async function fetchGithubData() {
     try {
-      const response = await axios.get('https://api.github.com/users/ratiksingha');
+      const response = await axios.get("https://api.github.com/users/ratiksingha");
       setUserData(response.data);
     } catch (error) {
-      console.error('Error fetching GitHub data:', error);
+      console.error("Error fetching GitHub data:", error);
     }
   }
 
   if (!userData) {
     return (
-      <Box display="flex" justifyContent="center" mt={5}>
-        <CircularProgress />
-      </Box>
+      <div className="flex justify-center items-center min-h-[40vh]">
+        <div className="w-12 h-12 border-4 border-orange-400 border-t-transparent rounded-full animate-spin"></div>
+      </div>
     );
   }
 
   const { name, bio, location, avatar_url, html_url } = userData;
 
   return (
-    <Box display="flex" justifyContent="center" mt={5}>
-      <Card sx={{ maxWidth: 400, p: 2, boxShadow: 6, borderRadius: 4 }}>
-        <Box display="flex" justifyContent="center">
-          <Avatar
-            src={avatar_url}
-            alt={name}
-            sx={{ width: 100, height: 100, mb: 2 }}
-          />
-        </Box>
-        <CardContent>
-          <Typography variant="h5" align="center" gutterBottom>
-            {name}
-          </Typography>
-          <Typography component="ul" variant="body1" align="center" color="text.secondary">
-            <li>{bio}</li>
-          </Typography>
-          <Typography variant="body2" align="center" sx={{ mt: 1 }}>
-            📍 {location}
-          </Typography>
-          <Box display="flex" justifyContent="center" mt={3}>
-            <Link href={html_url} target="_blank" rel="noopener noreferrer">
-              <Button variant="contained" color="primary">
-                Visit GitHub Profile
-              </Button>
-            </Link>
-          </Box>
-        </CardContent>
-      </Card>
-    </Box>
+    <div className="flex justify-center mt-10">
+      <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full flex flex-col items-center">
+        <img
+          src={avatar_url}
+          alt={name}
+          className="w-28 h-28 rounded-full border-4 border-orange-100 shadow mb-4 transition-transform duration-300 hover:scale-110"
+        />
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">{name}</h2>
+        <p className="text-sm text-gray-600 text-left w-full mb-2">{bio}</p>
+        <p className="text-sm text-gray-400 w-full text-center mb-4">📍 {location}</p>
+        <a
+          href={html_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold transition"
+        >
+          Visit GitHub Profile
+        </a>
+      </div>
+    </div>
   );
 };
 

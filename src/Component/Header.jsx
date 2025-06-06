@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 const navLinks = [
   { label: "Home", path: "/" },
-  { label: "About Me", path: "/about" },
+  { label: "About🧑‍💻", path: "/about" },
   { label: "🛒 ", path: "/cart" },
   { label: "Contact", path: "/contact" },
 ];
@@ -40,10 +40,10 @@ const Header = () => {
               >
                 {label}
                 {label === "🛒 " && (
-  <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-orange-500 text-white shadow">
-    {cartItemsCount}
-  </span>
-)}
+              <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-orange-500 text-white shadow">
+                {cartItemsCount}
+              </span>
+            )}
               </Link>
             </li>
           ))}
