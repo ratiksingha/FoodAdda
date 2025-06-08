@@ -3,10 +3,18 @@ import { IMG_CDN_URL } from "../utils/constant";
 import { useDispatch } from "react-redux";
 import { addItem, removeItem, clearCart } from "../slice/cartSlice";
 import { Link , useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { createContext } from "react";
 
 const Cart = () => {
+  
+  
+
+
   const navigate = useNavigate();
   const cart = useSelector((store) => store.cart);
+  
+  console.log(cart.items[0]?.card.info.category);
   const dispatch = useDispatch();
 
   const handleAddItem = (item) => {
@@ -18,7 +26,9 @@ const Cart = () => {
 
   const handleCheckout = () =>{
     //When user click on checkout btn he should redirect to checkout page
+    
     navigate("/checkout");
+   
 
   }
 
